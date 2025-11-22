@@ -85,4 +85,97 @@ echo "https://nbviewer.org/gist/<user>/<gist-id>"
 - Repo: https://github.com/nkllon/jobs-leadership-shadow-engine
 - Pages: https://nkllon.github.io/jobs-leadership-shadow-engine/
 
+## Repo runbook (this project)
+
+### Code references (quick links)
+- `.github/workflows/build-docs.yml`
+- `scripts/build_docs.sh`
+- `docs/index.html`
+- `docs/jobs_shadow_math.html`
+- `docs/coupling.html`
+- `docs/.nojekyll`
+- `jobs_shadow_math.md`
+- `jobs_shadow_coupling_spec.json`
+- `jobs_leadership_engine.ttl`
+- `jobs_shadow_engine.ttl`
+- `validation/shapes.ttl`
+- `validation/validate.sh`
+
+### Source-of-truth
+- Math/prose: `jobs_shadow_math.md` (Markdown). The `.ipynb` is secondary (optional authoring), not used by CI.
+- Ontologies: `.ttl` files are authoritative (OWL/RDF/Turtle).
+
+### Local build (Markdown → HTML with MathJax)
+```bash
+./scripts/build_docs.sh
+# Outputs: docs/jobs_shadow_math.html
+# Ensures: docs/.nojekyll
+# Copies:  jobs_shadow_coupling_spec.json → docs/
+```
+
+### CI build (on push to main)
+- Workflow: `.github/workflows/build-docs.yml`
+  - Installs `pandoc`, runs `scripts/build_docs.sh`, auto-commits `docs/` updates.
+  - Publishing target is GitHub Pages (`main:/docs`).
+
+### Visualization
+- Data: `jobs_shadow_coupling_spec.json` (nodes/links; shadow ↔ 22D couplings).
+- Viewer: `docs/coupling.html` (3D force-graph). On Pages: `/coupling.html`.
+- Local preview: open `docs/coupling.html` directly or serve `docs/` statically.
+
+### TTL validation (scaffold)
+```bash
+./validation/validate.sh
+# Uses Apache Jena 'shacl' if available; otherwise prints guidance for pyshacl.
+```
+
+### Updated checklists
+- Before you publish:
+  - [ ] Normalize math to `$`/`$$`.
+  - [ ] Run `./scripts/build_docs.sh` (verify MathJax rendering locally).
+  - [ ] Ensure `docs/.nojekyll` exists.
+  - [ ] (Optional) Run `./validation/validate.sh` on TTLs.
+  - [ ] Confirm `docs/coupling.html` loads the JSON spec without console errors.
+- After you publish:
+  - [ ] Verify Pages serves `jobs_shadow_math.html` and `coupling.html`.
+  - [ ] If updates don’t show, wait for CI or re-run workflow manually.
+
+### Troubleshooting (repo-specific)
+- `pandoc: command not found` → install pandoc (>= 2.17) and rerun.
+- Jena `shacl` not found → install Apache Jena or use `pyshacl` as noted in `validation/validate.sh`.
+- Viz JSON not loading → confirm `docs/jobs_shadow_coupling_spec.json` exists and path is correct.
+
+### Hygiene
+- Public HTML lives only under `docs/` (avoid duplicates at repo root).
+- `.gitignore` includes common noise (`*.bak`, `.DS_Store`, `.ipynb_checkpoints/`).
+- LICENSE: MIT.
+
+### Cursor agent rules (this repo)
+- Read `agents.md` and `README.md` before edits; summarize intent in your first status update.
+- Use absolute paths in tool calls; prefer semantic code search to explore, regex search for exact matches.
+- When citing existing code, use CODE REFERENCES blocks with start:end:filepath (no language tag).
+- For new/proposed code, use Markdown code fences with a language tag.
+- Maintain and update a TODO list for multi-step changes; set items in_progress/completed as you go.
+- Only place public HTML under `docs/`; do not add HTML to repo root.
+- For math publishing: normalize `$`/`$$` delimiters, then run `scripts/build_docs.sh`.
+- After edits that affect `docs/`, re-run the build and verify `docs/jobs_shadow_math.html` renders and `docs/coupling.html` loads JSON.
+
+### Maintainers & LLMs: operational checklist
+- Local:
+  - Build docs: `./scripts/build_docs.sh`
+  - Preview: open `docs/jobs_shadow_math.html` and `docs/coupling.html`
+  - Validate TTLs: `./validation/validate.sh`
+- CI:
+  - Confirm workflow ran on push to `main` (`.github/workflows/build-docs.yml`)
+  - If needed, dispatch manually; verify Pages updated
+- Hygiene:
+  - Keep README links current; keep `.gitignore` up to date
+  - Preserve MIT license header in new files
+
+### Future improvements (suggested)
+- Add link-check Action for `docs/` to prevent broken links.
+- Run SHACL validation in CI (Jena `shacl` or `pyshacl`) and fail on violations.
+- Pin Pandoc via a specific versioned action or container for reproducible builds.
+- Add `CONTRIBUTING.md` and `CODEOWNERS` to guide external changes and reviews.
+
 

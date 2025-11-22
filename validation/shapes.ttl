@@ -1,0 +1,45 @@
+@prefix sh:    <http://www.w3.org/ns/shacl#> .
+@prefix rdf:   <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs:  <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd:   <http://www.w3.org/2001/XMLSchema#> .
+
+@prefix lead:  <https://nkllon.com/lead#> .
+@prefix dim:   <https://nkllon.com/lead/dimension#> .
+@prefix dark:  <https://nkllon.com/lead/dark#> .
+@prefix coupl: <https://nkllon.com/lead/coupling#> .
+@prefix damp:  <https://nkllon.com/lead/damper#> .
+
+# Minimal scaffold to catch obvious modeling mistakes.
+# Extend as needed.
+
+lead:DimensionShape
+  a sh:NodeShape ;
+  sh:targetClass lead:Dimension ;
+  sh:property [
+    sh:path rdfs:label ;
+    sh:datatype xsd:string ;
+    sh:minCount 1 ;
+  ] ;
+  sh:property [
+    sh:path rdfs:comment ;
+    sh:datatype xsd:string ;
+    sh:minCount 1 ;
+  ] .
+
+lead:LeadershipEngineShape
+  a sh:NodeShape ;
+  sh:targetClass lead:LeadershipEngine ;
+  sh:property [
+    sh:path lead:hasDimension ;
+    sh:minCount 1 ;
+  ] .
+
+lead:ShadowEngineShape
+  a sh:NodeShape ;
+  sh:targetClass lead:ShadowEngine ;
+  sh:property [
+    sh:path lead:hasDimension ;
+    sh:minCount 1 ;
+  ] .
+
+

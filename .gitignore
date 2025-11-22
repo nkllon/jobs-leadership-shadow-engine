@@ -1,0 +1,14 @@
+*.bak
+.DS_Store
+.env
+.env.*
+*.log
+node_modules/
+dist/
+build/
+.venv/
+venv/
+__pycache__/
+.ipynb_checkpoints/
+
+

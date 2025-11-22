@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Jobs Shadow ↔ Leadership Engine — Coupling Graph (3D)</title>
+  <link rel="preconnect" href="https://unpkg.com">
+  <style>
+    html, body { height: 100%; margin: 0; }
+    body { font-family: -apple-system, system-ui, Segoe UI, Roboto, Helvetica, Arial, sans-serif; color: #111; background: #fff; }
+    #header { padding: 12px 16px; border-bottom: 1px solid #eee; }
+    #header h1 { font-size: 18px; margin: 0 0 6px 0; line-height: 1.2; }
+    #header .muted { color: #666; font-size: 13px; }
+    #graph { width: 100%; height: calc(100% - 60px); }
+    a { color: #0366d6; text-decoration: none; }
+  </style>
+</head>
+<body>
+  <div id="header">
+    <h1>Jobs Shadow ↔ Leadership Engine — Coupling Graph (3D)</h1>
+    <div class="muted">
+      Data: <code>jobs_shadow_coupling_spec.json</code> ·
+      <a href="./jobs_shadow_math.html">Math Note</a>
+    </div>
+  </div>
+  <div id="graph"></div>
+
+  <script src="https://unpkg.com/three@0.161.0/build/three.min.js"></script>
+  <script src="https://unpkg.com/3d-force-graph"></script>
+  <script>
+    const linkColor = (t) => t === 'amplify' ? '#0a8a0a' : (t === 'attenuate' ? '#c0392b' : '#0658c2');
+    const linkWidth = (s) => Math.max(0.5, Math.min(3.5, Math.abs(s)));
+
+    const elem = document.getElementById('graph');
+    const Graph = ForceGraph3D()(elem)
+      .nodeId('id')
+      .nodeLabel(node => `${node.id} (${node.group || 'n/a'})`)
+      .nodeAutoColorBy('group')
+      .linkOpacity(0.75)
+      .linkColor(l => linkColor(l.type))
+      .linkWidth(l => linkWidth(l.strength || 1))
+      .linkDirectionalParticles(1)
+      .linkDirectionalParticleSpeed(l => 0.002 + (Math.abs(l.strength || 0) * 0.0008))
+      .linkDirectionalParticleColor(l => linkColor(l.type))
+      .backgroundColor('#ffffff')
+      .jsonUrl('jobs_shadow_coupling_spec.json');
+  </script>
+</body>
+</html>
+
+
