@@ -1,147 +1,302 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Jobs Leadership Shadow Engine – Attractor & Bifurcation Math</title>
-<link rel="preconnect" href="https://cdn.jsdelivr.net">
-<script>
-window.MathJax = {
-  tex: { inlineMath: [['$', '$'], ['\\(', '\\)']], displayMath: [['$$','$$'], ['\\[','\\]']] },
-  svg: { fontCache: 'global' }
-};
-</script>
-<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
-<style>
-  body { font-family: -apple-system, system-ui, Segoe UI, Roboto, Helvetica, Arial, sans-serif; line-height: 1.6; padding: 32px 16px; max-width: 820px; margin: 0 auto; color: #111; }
-  h1, h2 { line-height: 1.25; }
-  code, pre { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, Liberation Mono, monospace; }
-  ul { padding-left: 1.25rem; }
-  .muted { color: #555; }
-  hr { border: 0; border-top: 1px solid #eee; margin: 24px 0; }
-</style>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>Jobs Leadership Shadow Engine – Attractor &amp; Bifurcation Math</title>
+  <style>
+    html {
+      color: #1a1a1a;
+      background-color: #fdfdfd;
+    }
+    body {
+      margin: 0 auto;
+      max-width: 36em;
+      padding-left: 50px;
+      padding-right: 50px;
+      padding-top: 50px;
+      padding-bottom: 50px;
+      hyphens: auto;
+      overflow-wrap: break-word;
+      text-rendering: optimizeLegibility;
+      font-kerning: normal;
+    }
+    @media (max-width: 600px) {
+      body {
+        font-size: 0.9em;
+        padding: 12px;
+      }
+      h1 {
+        font-size: 1.8em;
+      }
+    }
+    @media print {
+      html {
+        background-color: white;
+      }
+      body {
+        background-color: transparent;
+        color: black;
+        font-size: 12pt;
+      }
+      p, h2, h3 {
+        orphans: 3;
+        widows: 3;
+      }
+      h2, h3, h4 {
+        page-break-after: avoid;
+      }
+    }
+    p {
+      margin: 1em 0;
+    }
+    a {
+      color: #1a1a1a;
+    }
+    a:visited {
+      color: #1a1a1a;
+    }
+    img {
+      max-width: 100%;
+    }
+    h1, h2, h3, h4, h5, h6 {
+      margin-top: 1.4em;
+    }
+    h5, h6 {
+      font-size: 1em;
+      font-style: italic;
+    }
+    h6 {
+      font-weight: normal;
+    }
+    ol, ul {
+      padding-left: 1.7em;
+      margin-top: 1em;
+    }
+    li > ol, li > ul {
+      margin-top: 0;
+    }
+    blockquote {
+      margin: 1em 0 1em 1.7em;
+      padding-left: 1em;
+      border-left: 2px solid #e6e6e6;
+      color: #606060;
+    }
+    code {
+      font-family: Menlo, Monaco, Consolas, 'Lucida Console', monospace;
+      font-size: 85%;
+      margin: 0;
+      hyphens: manual;
+    }
+    pre {
+      margin: 1em 0;
+      overflow: auto;
+    }
+    pre code {
+      padding: 0;
+      overflow: visible;
+      overflow-wrap: normal;
+    }
+    .sourceCode {
+     background-color: transparent;
+     overflow: visible;
+    }
+    hr {
+      background-color: #1a1a1a;
+      border: none;
+      height: 1px;
+      margin: 1em 0;
+    }
+    table {
+      margin: 1em 0;
+      border-collapse: collapse;
+      width: 100%;
+      overflow-x: auto;
+      display: block;
+      font-variant-numeric: lining-nums tabular-nums;
+    }
+    table caption {
+      margin-bottom: 0.75em;
+    }
+    tbody {
+      margin-top: 0.5em;
+      border-top: 1px solid #1a1a1a;
+      border-bottom: 1px solid #1a1a1a;
+    }
+    th {
+      border-top: 1px solid #1a1a1a;
+      padding: 0.25em 0.5em 0.25em 0.5em;
+    }
+    td {
+      padding: 0.125em 0.5em 0.25em 0.5em;
+    }
+    header {
+      margin-bottom: 4em;
+      text-align: center;
+    }
+    #TOC li {
+      list-style: none;
+    }
+    #TOC ul {
+      padding-left: 1.3em;
+    }
+    #TOC > ul {
+      padding-left: 0;
+    }
+    #TOC a:not(:hover) {
+      text-decoration: none;
+    }
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: auto; overflow-x: auto;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    /* The extra [class] is a hack that increases specificity enough to
+       override a similar rule in reveal.js */
+    ul.task-list[class]{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      font-size: inherit;
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1.6em;
+      vertical-align: middle;
+    }
+  </style>
+  <script>
+  window.MathJax = {
+    tex: { inlineMath: [['$', '$'], ['\\(', '\\)']], displayMath: [['$$','$$'], ['\\[','\\]']] },
+    svg: { fontCache: 'global' }
+  };
+  </script>
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"
+  type="text/javascript"></script>
 </head>
 <body>
-<h1>Jobs Leadership Shadow Engine – Attractor &amp; Bifurcation Math</h1>
-
-<p class="muted">Permanent HTML with MathJax rendering.</p>
-
+<header id="title-block-header">
+<h1 class="title">Jobs Leadership Shadow Engine – Attractor &amp;
+Bifurcation Math</h1>
+</header>
+<h1 id="jobs-leadership-shadow-engine--attractor--bifurcation-math">Jobs
+Leadership Shadow Engine – Attractor &amp; Bifurcation Math</h1>
 <p>Let:</p>
 <ul>
-  <li>$ \\mathbf{L} \\in \\mathbb{R}^{21} $ = vector of the 21 leadership dimensions.</li>
-  <li>$ M \\in \\mathbb{R} $ = meta-coherence (D22: Vision Attractor Coherence).</li>
-  <li>$ \\mathbf{S} \\in \\mathbb{R}^{4} $ = shadow dimensions:
-    <ul>
-      <li>$ S_1 = $ Emotional Volatility</li>
-      <li>$ S_2 = $ Harsh Critique Intensity</li>
-      <li>$ S_3 = $ Ego Dominance</li>
-      <li>$ S_4 = $ Unpredictability</li>
-    </ul>
-  </li>
-  </ul>
-
-<h2>1. Leadership Attractor</h2>
-<p>Define the leadership attractor strength as:</p>
-<p>$$
-A_L = M \\cdot \\frac{1}{21} \\sum_{i=1}^{21} L_i^2
-$$</p>
-<p>This encodes:</p>
+<li>$ \mathbf{L} \in \mathbb{R}^{21} $ = vector of the 21 leadership
+dimensions.</li>
+<li>$ M \in \mathbb{R} $ = meta-coherence (D22: Vision Attractor
+Coherence).</li>
+<li>$ \mathbf{S} \in \mathbb{R}^{4} $ = shadow dimensions:
 <ul>
-  <li>Higher coherence $ M $ strengthens the attractor.</li>
-  <li>Higher, well-aligned leadership coordinates $ L_i $ increase overall field strength.</li>
+<li>$ S_1 = $ Emotional Volatility</li>
+<li>$ S_2 = $ Harsh Critique Intensity</li>
+<li>$ S_3 = $ Ego Dominance</li>
+<li>$ S_4 = $ Unpredictability</li>
+</ul></li>
 </ul>
-
-<h2>2. Shadow Attractor</h2>
-<p>Model the shadow as a separate quadratic potential:</p>
-<p>$$
-A_S = \\sum_{j=1}^{4} w_j S_j^2
-$$</p>
-<p>with weights representing their destructive leverage:</p>
+<h2 id="1-leadership-attractor">1. Leadership Attractor</h2>
+<p>Define the leadership attractor strength as: <span
+class="math display">\[
+A_L = M \cdot \frac{1}{21} \sum_{i=1}^{21} L_i^2
+\]</span> This encodes:</p>
 <ul>
-  <li>$ w_1 = 0.9 $ (Emotional Volatility)</li>
-  <li>$ w_2 = 0.7 $ (Harsh Critique)</li>
-  <li>$ w_3 = 1.1 $ (Ego Dominance)</li>
-  <li>$ w_4 = 0.8 $ (Unpredictability)</li>
+<li>Higher coherence $ M $ strengthens the attractor.</li>
+<li>Higher, well-aligned leadership coordinates $ L_i $ increase overall
+field strength.</li>
 </ul>
-
-<h2>3. Coupling Tensor</h2>
-<p>Let $ C_{ij} $ encode how each shadow dimension perturbs each leadership dimension:</p>
-<p>$$
-L'_j = L_j + \\sum_{i=1}^{4} C_{ij} S_i
-$$</p>
-<p>where:</p>
+<h2 id="2-shadow-attractor">2. Shadow Attractor</h2>
+<p>Model the shadow as a separate quadratic potential: <span
+class="math display">\[
+A_S = \sum_{j=1}^{4} w_j S_j^2
+\]</span> with weights representing their destructive leverage:</p>
 <ul>
-  <li>Positive $ C_{ij} $ = amplification (e.g., Harsh Critique → Bar Setting).</li>
-  <li>Negative $ C_{ij} $ = attenuation (e.g., Emotional Volatility → Iteration Cadence).</li>
+<li>$ w_1 = 0.9 $ (Emotional Volatility)</li>
+<li>$ w_2 = 0.7 $ (Harsh Critique)</li>
+<li>$ w_3 = 1.1 $ (Ego Dominance)</li>
+<li>$ w_4 = 0.8 $ (Unpredictability)</li>
 </ul>
-<p>The effective attractor becomes:</p>
-<p>$$
-A_L' = M \\cdot \\frac{1}{21} \\sum_{j=1}^{21} (L'_j)^2
-$$</p>
-
-<h2>4. Net System Attractor</h2>
-<p>Introduce a shadow penalty factor $ \\lambda &gt; 0 $:</p>
-<p>$$
-A_{\\text{net}} = A_L' - \\lambda A_S
-$$</p>
+<h2 id="3-coupling-tensor">3. Coupling Tensor</h2>
+<p>Let $ C_{ij} $ encode how each shadow dimension perturbs each
+leadership dimension: <span class="math display">\[
+L&#39;_j = L_j + \sum_{i=1}^{4} C_{ij} S_i
+\]</span> where:</p>
 <ul>
-  <li>If $ A_L' \\gg \\lambda A_S $: the leadership engine dominates (coherent attractor).</li>
-  <li>If $ \\lambda A_S \\approx A_L' $: the system becomes marginal, brittle, and high-variance.</li>
-  <li>If $ \\lambda A_S \\gg A_L' $: the shadow dominates; collapse of coherence (e.g., firing, implosion).</li>
+<li>Positive $ C_{ij} $ = amplification (e.g., Harsh Critique → Bar
+Setting).</li>
+<li>Negative $ C_{ij} $ = attenuation (e.g., Emotional Volatility →
+Iteration Cadence).</li>
 </ul>
-
+<p>The effective attractor becomes: <span class="math display">\[
+A_L&#39; = M \cdot \frac{1}{21} \sum_{j=1}^{21} (L&#39;_j)^2
+\]</span></p>
+<h2 id="4-net-system-attractor">4. Net System Attractor</h2>
+<p>Introduce a shadow penalty factor $ \lambda &gt; 0 $: <span
+class="math display">\[
+A_{\text{net}} = A_L&#39; - \lambda A_S
+\]</span></p>
+<ul>
+<li>If $ A_L' \gg \lambda A_S $: the leadership engine dominates
+(coherent attractor).</li>
+<li>If $ \lambda A_S \approx A_L' $: the system becomes marginal,
+brittle, and high-variance.</li>
+<li>If $ \lambda A_S \gg A_L' $: the shadow dominates; collapse of
+coherence (e.g., firing, implosion).</li>
+</ul>
 <p>Empirically, for Jobs you can interpret:</p>
 <ul>
-  <li>Early Jobs (pre-1985): high $ A_L $, very high $ A_S $, large $ \\lambda $ from weak dampers → breakdown.</li>
-  <li>Later Jobs (2000s): high $ A_L $, moderated $ A_S $, stronger dampers (Cook, Ive, culture) → stable edge regime.</li>
+<li>Early Jobs (pre-1985): high $ A_L $, very high $ A_S $, large $
+\lambda $ from weak dampers → breakdown.</li>
+<li>Later Jobs (2000s): high $ A_L $, moderated $ A_S $, stronger
+dampers (Cook, Ive, culture) → stable edge regime.</li>
 </ul>
-
-<h2>5. 22+4 Dimensional Bifurcation View</h2>
-<p>Consider a control parameter $ \\mu \\in \\mathbb{R} $ that scales the effective shadow:</p>
-<p>$$
-\\mathbf{S}_{\\text{eff}} = \\mu \\mathbf{S}
-$$</p>
-<p>and let the damper matrix $ D \\in \\mathbb{R}^{4 \\times 4} $ (diagonal, $ 0 \\le d_{ii} \\le 1 $) represent ethical dampers that reduce each shadow component:</p>
-<p>$$
-\\tilde{\\mathbf{S}} = (I - D)\\, \\mathbf{S}_{\\text{eff}} = (I - D)\\, \\mu \\mathbf{S}
-$$</p>
-<p>The shadow attractor becomes:</p>
-<p>$$
-A_S(\\mu, D) = \\sum_{j=1}^{4} w_j \\tilde{S}_j^2 .
-$$</p>
-<p>Define the <strong>bifurcation condition</strong> as the locus where net coherence is zero:</p>
-<p>$$
-A_{\\text{net}}(\\mu, D) = 0 \\quad \\Rightarrow \\quad
-M \\cdot \\frac{1}{21} \\sum_{j=1}^{21} (L'_j)^2 = \\lambda A_S(\\mu, D) .
-$$</p>
-<p>Qualitatively:</p>
+<h2 id="5-224-dimensional-bifurcation-view">5. 22+4 Dimensional
+Bifurcation View</h2>
+<p>Consider a control parameter $ \mu \in \mathbb{R} $ that scales the
+effective shadow: <span class="math display">\[
+\mathbf{S}_{\text{eff}} = \mu \mathbf{S}
+\]</span> and let the damper matrix $ D \in \mathbb{R}^{4 \times 4} $
+(diagonal, $ 0 \le d_{ii} \le 1 $) represent ethical dampers that reduce
+each shadow component: <span class="math display">\[
+\tilde{\mathbf{S}} = (I - D)\, \mathbf{S}_{\text{eff}} = (I - D)\, \mu
+\mathbf{S}
+\]</span> The shadow attractor becomes: <span class="math display">\[
+A_S(\mu, D) = \sum_{j=1}^{4} w_j \tilde{S}_j^2 .
+\]</span> Define the <strong>bifurcation condition</strong> as the locus
+where net coherence is zero: <span class="math display">\[
+A_{\text{net}}(\mu, D) = 0 \quad \Rightarrow \quad
+M \cdot \frac{1}{21} \sum_{j=1}^{21} (L&#39;_j)^2 = \lambda A_S(\mu, D)
+.
+\]</span> Qualitatively:</p>
 <ul>
-  <li>For $ \\mu $ small (shadow under-expressed) or $ D $ strong (dampers effective), the system sits in a <strong>single stable attractor</strong>: high-performance, high-pressure, but coherent.</li>
-  <li>As $ \\mu $ increases or $ D $ weakens:
-    <ul>
-      <li>First, you get <strong>edge-of-chaos behavior</strong>: large swings in morale and output, but still orbiting a recognizable attractor.</li>
-      <li>Beyond a critical $ \\mu_c(D) $, the system bifurcates into:
-        <ul>
-          <li>a high-output / high-damage regime, and</li>
-          <li>a collapse regime (burnout, attrition, political revolt).</li>
-        </ul>
-      </li>
-    </ul>
-  </li>
+<li>For $ \mu $ small (shadow under-expressed) or $ D $ strong (dampers
+effective), the system sits in a <strong>single stable
+attractor</strong>: high-performance, high-pressure, but coherent.</li>
+<li>As $ \mu $ increases or $ D $ weakens:
+<ul>
+<li>First, you get <strong>edge-of-chaos behavior</strong>: large swings
+in morale and output, but still orbiting a recognizable attractor.</li>
+<li>Beyond a critical $ \mu_c(D) $, the system bifurcates into:
+<ul>
+<li>a high-output / high-damage regime, and</li>
+<li>a collapse regime (burnout, attrition, political revolt).</li>
+</ul></li>
+</ul></li>
 </ul>
-
-<p>This is a <strong>22+4 dimensional bifurcation surface</strong> in the $(\\mathbf{L}, M, \\mathbf{S}, D)$ space. Practically, you can treat:</p>
+<p>This is a <strong>22+4 dimensional bifurcation surface</strong> in
+the <span class="math inline">\((\mathbf{L}, M, \mathbf{S}, D)\)</span>
+space. Practically, you can treat:</p>
 <ul>
-  <li>$ \\mu $ as "how much of the dark side is expressed", and</li>
-  <li>$ D $ as "how well the organization has wrapped the leader with buffers".</li>
+<li>$ \mu $ as "how much of the dark side is expressed", and</li>
+<li>$ D $ as "how well the organization has wrapped the leader with
+buffers".</li>
 </ul>
-
-<h2>6. Practical Use</h2>
+<h2 id="6-practical-use">6. Practical Use</h2>
 <ul>
-  <li>For coaching: estimate rough scores for $ \\mathbf{L}, M, \\mathbf{S} $, and dampers $ D $.</li>
-  <li>Track whether interventions (coaching, governance, process) move the system away from the bifurcation surface.</li>
-  <li>The goal is not to drive $ \\mathbf{S} $ to zero, but to contain it so $ A_L' $ consistently dominates.</li>
+<li>For coaching: estimate rough scores for $ \mathbf{L}, M, \mathbf{S}
+$, and dampers $ D $.</li>
+<li>Track whether interventions (coaching, governance, process) move the
+system away from the bifurcation surface.</li>
+<li>The goal is not to drive $ \mathbf{S} $ to zero, but to contain it
+so $ A_L' $ consistently dominates.</li>
 </ul>
 </body>
 </html>
-
