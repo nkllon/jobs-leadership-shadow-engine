@@ -1,0 +1,147 @@
+@prefix xsd:   <http://www.w3.org/2001/XMLSchema#> .
+@prefix rdf:   <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs:  <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix owl:   <http://www.w3.org/2002/07/owl#> .
+
+@prefix lead:  <https://nkllon.com/lead#> .
+@prefix dim:   <https://nkllon.com/lead/dimension#> .
+@prefix dark:  <https://nkllon.com/lead/dark#> .
+@prefix coupl: <https://nkllon.com/lead/coupling#> .
+@prefix damp:  <https://nkllon.com/lead/damper#> .
+
+#################################################################
+# Shadow Engine Class
+#################################################################
+
+lead:ShadowEngine a owl:Class ;
+    rdfs:label "Shadow Engine" ;
+    rdfs:comment "A system of high-variance modulators influencing a Leadership Engine." .
+
+damp:EthicalDamper a owl:Class ;
+    rdfs:label "Ethical Damper" ;
+    rdfs:comment "A structural or cultural mechanism that buffers or redirects dark-side effects." .
+
+#################################################################
+# Shadow Dimensions (Dark-Side)
+#################################################################
+
+dark:EmotionalVolatility a lead:Dimension ;
+    rdfs:label "Emotional Volatility" ;
+    rdfs:comment "Amplitude of emotional reactions; increases pressure, decreases predictability." .
+
+dark:HarshCritiqueIntensity a lead:Dimension ;
+    rdfs:label "Harsh Critique Intensity" ;
+    rdfs:comment "Severity of direct critique; can sharpen execution or induce fear." .
+
+dark:EgoDominance a lead:Dimension ;
+    rdfs:label "Ego Dominance" ;
+    rdfs:comment "Degree to which ego overrides rational evaluation." .
+
+dark:Unpredictability a lead:Dimension ;
+    rdfs:label "Unpredictability" ;
+    rdfs:comment "Variance in affect and decision; drives creative tension but lowers psychological safety." .
+
+#################################################################
+# Shadow Engine Instance
+#################################################################
+
+lead:JobsShadowEngine a lead:ShadowEngine ;
+    rdfs:label "Jobs Shadow Engine" ;
+    lead:hasDimension dark:EmotionalVolatility ,
+                      dark:HarshCritiqueIntensity ,
+                      dark:EgoDominance ,
+                      dark:Unpredictability .
+
+#################################################################
+# Coupling Relations (Shadow → 22D Engine)
+#################################################################
+
+coupl:HarshCritique_to_BarSetting a owl:ObjectProperty ;
+    rdfs:label "HarshCritique → InsanelyGreatBarSetting" ;
+    rdfs:comment "Harsh critique amplifies the bar setting dimension." .
+
+coupl:HarshCritique_to_ScopeKill a owl:ObjectProperty ;
+    rdfs:label "HarshCritique → ScopeRuthlessness" ;
+    rdfs:comment "Harsh critique amplifies scope ruthlessness." .
+
+coupl:Emotion_to_ExecutionPressure a owl:ObjectProperty ;
+    rdfs:label "EmotionalVolatility → ExecutionPressure" ;
+    rdfs:comment "Emotional volatility amplifies execution pressure." .
+
+coupl:Emotion_to_IterationSlow a owl:ObjectProperty ;
+    rdfs:label "EmotionalVolatility → IterationCadence" ;
+    rdfs:comment "Emotional volatility attenuates iteration cadence." .
+
+coupl:Ego_to_TalentDensity a owl:ObjectProperty ;
+    rdfs:label "EgoDominance → TalentDensity" ;
+    rdfs:comment "Ego dominance attenuates talent density." .
+
+coupl:Unpredict_to_Broadcasting a owl:ObjectProperty ;
+    rdfs:label "Unpredictability → VisionBroadcastingBandwidth" ;
+    rdfs:comment "Unpredictability attenuates vision broadcasting bandwidth." .
+
+coupl:Shadow_to_Coherence a owl:ObjectProperty ;
+    rdfs:label "Shadow → VisionAttractorCoherence" ;
+    rdfs:comment "Aggregate shadow influence on the meta-dimension of coherence." .
+
+#################################################################
+# Ethical Dampers
+#################################################################
+
+damp:OpsBuffering a damp:EthicalDamper ;
+    rdfs:label "Operations Buffering" ;
+    rdfs:comment "Operational leaders translate volatile demands into stable execution plans." .
+
+damp:DesignAlliance a damp:EthicalDamper ;
+    rdfs:label "Design Alliance" ;
+    rdfs:comment "Trusted design partners who reinterpret harsh critique as product input, not personal attack." .
+
+damp:HRBoundaries a damp:EthicalDamper ;
+    rdfs:label "HR Boundaries" ;
+    rdfs:comment "Policies and coaching that constrain abusive behavior and protect staff." .
+
+damp:PeerCounterweight a damp:EthicalDamper ;
+    rdfs:label "Peer Counterweight" ;
+    rdfs:comment "Strong peers who can push back on ego-driven decisions." .
+
+damp:BoardGovernance a damp:EthicalDamper ;
+    rdfs:label "Board Governance" ;
+    rdfs:comment "Board-level oversight that limits destructive uses of power." .
+
+damp:PsychSafetyPractices a damp:EthicalDamper ;
+    rdfs:label "Psychological Safety Practices" ;
+    rdfs:comment "Team norms that encourage speaking up despite intensity." .
+
+#################################################################
+# Damper Couplings (Shadow → Damper → Engine)
+#################################################################
+
+damp:buffers a owl:ObjectProperty ;
+    rdfs:label "buffers" ;
+    rdfs:domain damp:EthicalDamper ;
+    rdfs:range lead:Dimension ;
+    rdfs:comment "Indicates that a damper buffers a dark-side dimension." .
+
+damp:protects a owl:ObjectProperty ;
+    rdfs:label "protects" ;
+    rdfs:domain damp:EthicalDamper ;
+    rdfs:range lead:Dimension ;
+    rdfs:comment "Indicates that a damper protects a core or meta dimension." .
+
+damp:OpsBuffering damp:buffers dark:EmotionalVolatility ;
+    damp:protects dim:D16_IterationCadence , dim:D22_VisionAttractorCoherence .
+
+damp:DesignAlliance damp:buffers dark:HarshCritiqueIntensity ;
+    damp:protects dim:D12_InsanelyGreatBarSetting , dim:D14_TalentDensity .
+
+damp:HRBoundaries damp:buffers dark:EgoDominance , dark:EmotionalVolatility ;
+    damp:protects dim:D14_TalentDensity , dim:D21_VisionBroadcastingBandwidth .
+
+damp:PeerCounterweight damp:buffers dark:EgoDominance ;
+    damp:protects dim:D22_VisionAttractorCoherence .
+
+damp:BoardGovernance damp:buffers dark:EgoDominance , dark:Unpredictability ;
+    damp:protects dim:D22_VisionAttractorCoherence .
+
+damp:PsychSafetyPractices damp:buffers dark:Unpredictability ;
+    damp:protects dim:D16_IterationCadence , dim:D21_VisionBroadcastingBandwidth .

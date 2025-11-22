@@ -1,0 +1,225 @@
+@prefix xsd:   <http://www.w3.org/2001/XMLSchema#> .
+@prefix rdf:   <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs:  <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix owl:   <http://www.w3.org/2002/07/owl#> .
+
+@prefix lead:  <https://nkllon.com/lead#> .
+@prefix dim:   <https://nkllon.com/lead/dimension#> .
+@prefix ex:    <https://nkllon.com/lead/example#> .
+
+#################################################################
+# Core Classes
+#################################################################
+
+lead:LeadershipEngine a owl:Class ;
+    rdfs:label "Leadership Engine" ;
+    rdfs:comment "A structured pattern of leadership behavior modeled as a multi-dimensional engine." .
+
+lead:LeadershipPattern a owl:Class ;
+    rdfs:label "Leadership Pattern" ;
+    rdfs:comment "A recurring pattern of leadership emphasis or behavior (e.g., focus, visionary leadership)." .
+
+lead:Dimension a owl:Class ;
+    rdfs:label "Dimension" ;
+    rdfs:comment "A measurable axis along which a leadership engine can vary." .
+
+lead:CoreDimension a owl:Class ;
+    rdfs:subClassOf lead:Dimension ;
+    rdfs:label "Core Dimension" ;
+    rdfs:comment "An operational axis directly influencing leadership behavior or outcomes." .
+
+lead:MetaDimension a owl:Class ;
+    rdfs:subClassOf lead:Dimension ;
+    rdfs:label "Meta Dimension" ;
+    rdfs:comment "A higher-order axis describing the coherence or interaction of core dimensions." .
+
+#################################################################
+# Object Properties
+#################################################################
+
+lead:hasDimension a owl:ObjectProperty ;
+    rdfs:domain lead:LeadershipEngine ;
+    rdfs:range lead:Dimension ;
+    rdfs:label "has dimension" .
+
+lead:hasCoreDimension a owl:ObjectProperty ;
+    rdfs:subPropertyOf lead:hasDimension ;
+    rdfs:domain lead:LeadershipEngine ;
+    rdfs:range lead:CoreDimension ;
+    rdfs:label "has core dimension" .
+
+lead:hasMetaDimension a owl:ObjectProperty ;
+    rdfs:subPropertyOf lead:hasDimension ;
+    rdfs:domain lead:LeadershipEngine ;
+    rdfs:range lead:MetaDimension ;
+    rdfs:label "has meta dimension" .
+
+lead:supportsPattern a owl:ObjectProperty ;
+    rdfs:domain lead:Dimension ;
+    rdfs:range lead:LeadershipPattern ;
+    rdfs:label "supports pattern" .
+
+#################################################################
+# Example Patterns
+#################################################################
+
+ex:JobsFocusPost a lead:LeadershipPattern ;
+    rdfs:label "Jobs-style Focus Engine (Post)" ;
+    rdfs:comment "Pattern extracted from a post emphasizing focus, visionary leadership, and Apple's innovation engine." .
+
+ex:FocusAsSuperpower a lead:LeadershipPattern ;
+    rdfs:label "Focus as a Superpower" .
+
+ex:VisionaryLeadership a lead:LeadershipPattern ;
+    rdfs:label "Visionary Leadership" .
+
+ex:EngineOfSuccess a lead:LeadershipPattern ;
+    rdfs:label "Engine of Success" .
+
+ex:JobsFocusPost lead:hasSubPattern ex:FocusAsSuperpower , ex:VisionaryLeadership , ex:EngineOfSuccess .
+
+#################################################################
+# Jobs Leadership Engine Individual
+#################################################################
+
+ex:JobsFocusEngine a lead:LeadershipEngine ;
+    rdfs:label "Jobs Focus Engine" ;
+    rdfs:comment "A 21+1 dimensional leadership engine inspired by Steve Jobs' focus and visionary style." ;
+    lead:hasCoreDimension
+        dim:D01_ProblemFocusDepth ,
+        dim:D02_ScopeRuthlessness ,
+        dim:D03_LeverageOfProblemSelection ,
+        dim:D04_AttentionBandwidthGuarding ,
+        dim:D05_TemporalFocusHorizon ,
+        dim:D06_CustomerEmpathyDepth ,
+        dim:D07_TasteAestheticCoherence ,
+        dim:D08_TechnologicalImagination ,
+        dim:D09_ConstraintEmbrace ,
+        dim:D10_RiskAppetiteAtVisionEdge ,
+        dim:D11_NarrativeGravity ,
+        dim:D12_InsanelyGreatBarSetting ,
+        dim:D13_CrossFunctionalIntegration ,
+        dim:D14_TalentDensity ,
+        dim:D15_ExecutionPressure ,
+        dim:D16_IterationCadence ,
+        dim:D17_QualitySpeedTradeStrategy ,
+        dim:D18_DefectIntoleranceCoreExperience ,
+        dim:D19_OpinionImmunity ,
+        dim:D20_SignalSensitivity ,
+        dim:D21_VisionBroadcastingBandwidth ;
+    lead:hasMetaDimension dim:D22_VisionAttractorCoherence ;
+    lead:anchorsIn ex:JobsFocusPost .
+
+#################################################################
+# Dimensions (21 Core + 1 Meta)
+#################################################################
+
+dim:D01_ProblemFocusDepth a lead:CoreDimension ;
+    rdfs:label "Problem Focus Depth" ;
+    rdfs:comment "Depth of attention given to a small set of chosen problems before context switching." ;
+    lead:supportsPattern ex:FocusAsSuperpower .
+
+dim:D02_ScopeRuthlessness a lead:CoreDimension ;
+    rdfs:label "Scope Ruthlessness" ;
+    rdfs:comment "Aggressiveness in cutting non-essential projects, features, and distractions." ;
+    lead:supportsPattern ex:FocusAsSuperpower .
+
+dim:D03_LeverageOfProblemSelection a lead:CoreDimension ;
+    rdfs:label "Leverage of Problem Selection" ;
+    rdfs:comment "Degree to which a chosen problem can bend company trajectory." ;
+    lead:supportsPattern ex:FocusAsSuperpower .
+
+dim:D04_AttentionBandwidthGuarding a lead:CoreDimension ;
+    rdfs:label "Attention Bandwidth Guarding" ;
+    rdfs:comment "Protection of leadership and key teams' attention from low-value demands." ;
+    lead:supportsPattern ex:FocusAsSuperpower .
+
+dim:D05_TemporalFocusHorizon a lead:CoreDimension ;
+    rdfs:label "Temporal Focus Horizon" ;
+    rdfs:comment "Preferred time horizon for the payoff of focused efforts." ;
+    lead:supportsPattern ex:FocusAsSuperpower .
+
+dim:D06_CustomerEmpathyDepth a lead:CoreDimension ;
+    rdfs:label "Customer Empathy Depth" ;
+    rdfs:comment "Clarity and richness of internal models of the user." ;
+    lead:supportsPattern ex:VisionaryLeadership .
+
+dim:D07_TasteAestheticCoherence a lead:CoreDimension ;
+    rdfs:label "Taste and Aesthetic Coherence" ;
+    rdfs:comment "Stringency of taste and design coherence across artifacts." ;
+    lead:supportsPattern ex:VisionaryLeadership .
+
+dim:D08_TechnologicalImagination a lead:CoreDimension ;
+    rdfs:label "Technological Imagination" ;
+    rdfs:comment "Ability to envision new categories by recombining and stretching existing technologies." ;
+    lead:supportsPattern ex:VisionaryLeadership .
+
+dim:D09_ConstraintEmbrace a lead:CoreDimension ;
+    rdfs:label "Constraint Embrace" ;
+    rdfs:comment "Use of hard constraints as design rails rather than excuses." ;
+    lead:supportsPattern ex:VisionaryLeadership .
+
+dim:D10_RiskAppetiteAtVisionEdge a lead:CoreDimension ;
+    rdfs:label "Risk Appetite at the Vision Edge" ;
+    rdfs:comment "Tolerance for high-consequence bets at the edge of feasibility." ;
+    lead:supportsPattern ex:VisionaryLeadership .
+
+dim:D11_NarrativeGravity a lead:CoreDimension ;
+    rdfs:label "Narrative Gravity" ;
+    rdfs:comment "Pull of the story aligning talent, capital, and execution." ;
+    lead:supportsPattern ex:VisionaryLeadership .
+
+dim:D12_InsanelyGreatBarSetting a lead:CoreDimension ;
+    rdfs:label "Insanely-Great Bar Setting" ;
+    rdfs:comment "Height of the bar for shipping a product or feature." ;
+    lead:supportsPattern ex:EngineOfSuccess .
+
+dim:D13_CrossFunctionalIntegration a lead:CoreDimension ;
+    rdfs:label "Cross-Functional Integration" ;
+    rdfs:comment "Tightness of integration across hardware, software, design, and GTM." ;
+    lead:supportsPattern ex:EngineOfSuccess .
+
+dim:D14_TalentDensity a lead:CoreDimension ;
+    rdfs:label "Talent Density and Bar-Raising" ;
+    rdfs:comment "Minimum acceptable caliber of individuals in critical loops." ;
+    lead:supportsPattern ex:EngineOfSuccess .
+
+dim:D15_ExecutionPressure a lead:CoreDimension ;
+    rdfs:label "Execution Pressure and Intensity" ;
+    rdfs:comment "Level and constancy of performance pressure." ;
+    lead:supportsPattern ex:EngineOfSuccess .
+
+dim:D16_IterationCadence a lead:CoreDimension ;
+    rdfs:label "Iteration Cadence and Feedback Tightness" ;
+    rdfs:comment "Speed and tightness of loops from concept to critique to refinement." ;
+    lead:supportsPattern ex:EngineOfSuccess .
+
+dim:D17_QualitySpeedTradeStrategy a lead:CoreDimension ;
+    rdfs:label "Quality–Speed Trade Strategy" ;
+    rdfs:comment "Principled stance on when to favor quality over speed and vice versa." ;
+    lead:supportsPattern ex:EngineOfSuccess .
+
+dim:D18_DefectIntoleranceCoreExperience a lead:CoreDimension ;
+    rdfs:label "Defect Intolerance in Core Experience" ;
+    rdfs:comment "Zero tolerance for defects in central user flows." ;
+    lead:supportsPattern ex:EngineOfSuccess .
+
+dim:D19_OpinionImmunity a lead:CoreDimension ;
+    rdfs:label "Opinion Immunity" ;
+    rdfs:comment "Resistance to external/internal noise that conflicts with a well-formed vision." ;
+    lead:supportsPattern ex:VisionaryLeadership .
+
+dim:D20_SignalSensitivity a lead:CoreDimension ;
+    rdfs:label "Signal Sensitivity" ;
+    rdfs:comment "Sensitivity to real shifts in tech or user behavior that matter to the engine." ;
+    lead:supportsPattern ex:VisionaryLeadership .
+
+dim:D21_VisionBroadcastingBandwidth a lead:CoreDimension ;
+    rdfs:label "Vision Broadcasting Bandwidth" ;
+    rdfs:comment "How clearly and frequently the vision is communicated." ;
+    lead:supportsPattern ex:EngineOfSuccess .
+
+dim:D22_VisionAttractorCoherence a lead:MetaDimension ;
+    rdfs:label "Vision Attractor Coherence" ;
+    rdfs:comment "Meta-dimension describing how strongly the 21 core dimensions align into a single, stable leadership attractor." ;
+    lead:supportsPattern ex:JobsFocusPost .

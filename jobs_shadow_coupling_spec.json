@@ -1,0 +1,110 @@
+{
+  "type": "force3d",
+  "nodes": [
+    {
+      "id": "Shadow_EmotionalVolatility",
+      "group": "shadow",
+      "mass": 2
+    },
+    {
+      "id": "Shadow_HarshCritiqueIntensity",
+      "group": "shadow",
+      "mass": 2
+    },
+    {
+      "id": "Shadow_EgoDominance",
+      "group": "shadow",
+      "mass": 2
+    },
+    {
+      "id": "Shadow_Unpredictability",
+      "group": "shadow",
+      "mass": 2
+    },
+    {
+      "id": "D12_InsanelyGreatBarSetting",
+      "group": "core"
+    },
+    {
+      "id": "D02_ScopeRuthlessness",
+      "group": "core"
+    },
+    {
+      "id": "D15_ExecutionPressure",
+      "group": "core"
+    },
+    {
+      "id": "D16_IterationCadence",
+      "group": "core"
+    },
+    {
+      "id": "D14_TalentDensity",
+      "group": "core"
+    },
+    {
+      "id": "D21_VisionBroadcastingBandwidth",
+      "group": "core"
+    },
+    {
+      "id": "D22_AttractorCoherence",
+      "group": "meta",
+      "mass": 3
+    }
+  ],
+  "links": [
+    {
+      "source": "Shadow_HarshCritiqueIntensity",
+      "target": "D12_InsanelyGreatBarSetting",
+      "strength": 1.4,
+      "type": "amplify"
+    },
+    {
+      "source": "Shadow_HarshCritiqueIntensity",
+      "target": "D02_ScopeRuthlessness",
+      "strength": 1.3,
+      "type": "amplify"
+    },
+    {
+      "source": "Shadow_EmotionalVolatility",
+      "target": "D15_ExecutionPressure",
+      "strength": 1.5,
+      "type": "amplify"
+    },
+    {
+      "source": "Shadow_EmotionalVolatility",
+      "target": "D16_IterationCadence",
+      "strength": -1.1,
+      "type": "attenuate"
+    },
+    {
+      "source": "Shadow_EgoDominance",
+      "target": "D14_TalentDensity",
+      "strength": -1.6,
+      "type": "attenuate"
+    },
+    {
+      "source": "Shadow_Unpredictability",
+      "target": "D21_VisionBroadcastingBandwidth",
+      "strength": -1.2,
+      "type": "attenuate"
+    },
+    {
+      "source": "Shadow_EmotionalVolatility",
+      "target": "D22_AttractorCoherence",
+      "strength": -0.9,
+      "type": "nonlinear"
+    },
+    {
+      "source": "Shadow_EgoDominance",
+      "target": "D22_AttractorCoherence",
+      "strength": -1.4,
+      "type": "nonlinear"
+    },
+    {
+      "source": "Shadow_HarshCritiqueIntensity",
+      "target": "D22_AttractorCoherence",
+      "strength": 0.4,
+      "type": "nonlinear"
+    }
+  ]
+}
